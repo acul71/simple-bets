@@ -1,7 +1,7 @@
-# Soccer bets
+# Simple Bets
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
 It will use Moralis, HardHat, Chainlink.\
-It will manage soccer bets using Enetscores Sports Data Oracle
+It will be a simple bet app 
 
 ## Available Scripts
 
