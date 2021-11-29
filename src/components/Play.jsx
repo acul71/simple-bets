@@ -18,6 +18,7 @@ export const Play = () => {
   const [playDisabled, setPlayDisabled] = useState(true)
 
   const betAmountInput = React.createRef()
+  const resultText = React.createRef()
 
   const handleBetAmount = () => {
     console.log('betAmountInput =', betAmountInput.current.value)
@@ -93,19 +94,39 @@ export const Play = () => {
 
   const testWeb3 = async () => {
     
+    resultText.current.textContent = 'Waiting for result....'
+
     const web3 = await Moralis.enableWeb3()
     const contract = new web3.eth.Contract(RandomNumberConsumerABI, RandomNumberConsumerAddress)
     console.log('contract=', contract)
-    const options = {
+    let options = {
       contractAddress: RandomNumberConsumerAddress,
-      //functionName: "getRandomNumber",
-      functionName: "randomResult",
+      functionName: "getRandomNumber",
       abi: RandomNumberConsumerABI,
       params: {        
       },
     };
     const res = await Moralis.executeFunction(options)
-    console.log('res=', res)
+    console.log('getRandomNumber=', res)
+
+    options = {
+      contractAddress: RandomNumberConsumerAddress,
+      functionName: "randomResult",
+      abi: RandomNumberConsumerABI,
+      params: {        
+      },
+    };
+    const randomResult = await Moralis.executeFunction(options)
+    console.log('randomResult=', randomResult)
+    const randomNumber = randomResult.substring(0,7) % 4 + 1
+    console.log('random number=', randomNumber)
+
+    if (randomNumber == betSel) {
+      resultText.current.textContent = 'You WON ' + betAmount * 2 + ' MATIC'
+    } else {
+      resultText.current.textContent = 'You LOST ' + betAmount  + ' MATIC'
+    }
+
     /*
     contract.methods.randomResult().call(function(err, res){
       //do something with res here
@@ -142,6 +163,7 @@ export const Play = () => {
         </InputGroup>
         
         <Button onClick={handlePlay} mt={4} mb={4} isDisabled={playDisabled}>PLAY</Button>
+        <Text mt={5} mb={4} fontSize="lg" ref={resultText}></Text>
         
         
       </Box>
