@@ -91,16 +91,6 @@ contract SimpleBet is VRFConsumerBase, Base {
         uint balance = address(this).balance;
         require(msg.value <= balance / 2, "Bet stake is too high");
         
-        // Call oracle for random number
-        /*
-        uint256 QUERY_EXECUTION_DELAY = 0;
-        uint256 GAS_FOR_CALLBACK = 200000;
-        bytes32 _queryId = provable_newRandomDSQuery(
-            QUERY_EXECUTION_DELAY,
-            NUM_RANDOM_BYTES_REQUESTED,
-            GAS_FOR_CALLBACK
-        );
-        */
         bytes32 _requestId = getRandomNumber();
         
         playerbets[_requestId] = Player(msg.sender, msg.value, userBet);
@@ -112,16 +102,13 @@ contract SimpleBet is VRFConsumerBase, Base {
         return address(this).balance;
     }
 
-    function fund() public payable {
+    //function fund() public payable {
+    function fund() external payable {        
     }
 
     function withdrawAll() public onlyOwner {
-        //address payable payAddress = payable(address(this));
         address payable payAddress = payable(owner);
         payAddress.transfer(address(this).balance);
-        //msg.sender.transfer(payable(address(this)).balance);
-        //address payable payAddress = address(owner);
-        //msg.sender.transfer(payAddress);
     }
 
 
