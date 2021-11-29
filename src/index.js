@@ -4,9 +4,33 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+//import { appId, serverUrl } from './moralisCredetials'
+import { MoralisProvider } from "react-moralis"
+import { ChakraProvider, extendTheme } from "@chakra-ui/react"
+import { BrowserRouter} from 'react-router-dom'
+
+//require('dotenv').config()
+
+const APP_ID = process.env.REACT_APP_MORALIS_APPLICATION_ID;
+const SERVER_URL = process.env.REACT_APP_MORALIS_SERVER_URL;
+
+
+
+const theme = extendTheme({
+  config: {
+    initialColorMode: 'dark'
+  }
+})
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
+      <ChakraProvider theme={theme}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ChakraProvider>
+    </MoralisProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
