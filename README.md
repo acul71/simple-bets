@@ -1,9 +1,14 @@
 # Simple Bets
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
-It will use Moralis, HardHat, Chainlink.\
-It will be a simple bet app 
+It use Moralis, Chainlink, Polygon (mumbai test network) and IPFS (Fleek).\
+It is a simple bet app\
+You can choose between 4 beers (a number from 1 to 4)\
+and if get lucky you won otherwise you loose (2-1 odds)\
+You can try a demo here: https://solitary-art-3255.on.fleek.co/
 
 ## Available Scripts
+First you have to set Metamask to mumbai test network.\
+Then edit the file .env (you find an example in .env.example) with your Moralis credentials.
 
 In the project directory, you can run:
 
